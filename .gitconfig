@@ -1,0 +1,18 @@
+[author]
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+[user]
+	name = karenzshea
+	email = karenzshea@gmail.com
+[push]
+    default = simple
+[core]
+    excludesfile = /home/karen/.gitignore
+[remote "origin"]
+    fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+[difftool]
+    prompt = false
+[grep]
+    lineNumber = true
