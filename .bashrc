@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=2000
-HISTFILESIZE=2000
+HISTSIZE=5000
+HISTFILESIZE=5000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -124,7 +124,7 @@ export NVM_DIR="/home/karen/.nvm"
 
 if [ -d "$HOME/.nvm" ]; then
     source "$HOME/.nvm/nvm.sh"
-    nvm use 5.0 > /dev/null
+    nvm use 4.4.2 > /dev/null
 fi
 
 source "$(npm root -g)/mbxcli/mapbox.sh"
@@ -181,3 +181,5 @@ function s3du() {
    prefix=`awk -F/ '{for (i=4; i<NF; i++) printf $i"/"; print $NF}' <<< $1`
    aws s3api list-objects --bucket $bucket --prefix=$prefix --output json --query '[sum(Contents[].Size), length(Contents[])]' | jq '. |{ size:.[0],num_objects: .[1]}'
 }
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

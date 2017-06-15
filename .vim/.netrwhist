@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/karen/fun/tmp'
+let g:netrw_dirhist_2='/home/karen/fun/moving'
+let g:netrw_dirhist_3='/opt/clones/osrm-backend/test/logs/car/ferry.feature'
+let g:netrw_dirhist_4='/opt/clones/osrm-backend/test/logs/car/ferry.feature/7faa384277770f81feffdf8e12d3e945'
