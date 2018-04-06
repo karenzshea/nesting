@@ -11,3 +11,5 @@ alias suspend='sudo pm-suspend'
 alias hibernate='sudo pm-hibernate'
 
 alias trail="sed -i 's/\s*$//'"
+alias cuke='/home/karen/Mapbox/osrm-backend/node_modules/.bin/cucumberjs'
+alias osmium='/home/karen/Mapbox/osmium-tool-1.6.1/build/osmium'

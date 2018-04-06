@@ -119,15 +119,12 @@ fi
 export EDITOR=vim
 export GREP_COLOR="1;33"
 
-export NVM_DIR="/home/karen/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
 if [ -d "$HOME/.nvm" ]; then
     source "$HOME/.nvm/nvm.sh"
-    nvm use 4.4.2 > /dev/null
+    nvm use --lts=carbon> /dev/null
 fi
 
-source "$(npm root -g)/mbxcli/mapbox.sh"
+source "$(npm root -g)/@mapbox/mbxcli/bin/mapbox.sh"
 
 shopt -s checkwinsize
 
@@ -171,7 +168,7 @@ function t() {
 }
 
 # AWS cli autocomplete
-complete -C '/usr/local/bin/aws_completer' aws
+complete -C '/usr/bin/aws_completer' aws
 
 # added by travis gem
 [ -f /home/karen/.travis/travis.sh ] && source /home/karen/.travis/travis.sh
@@ -183,3 +180,10 @@ function s3du() {
 }
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# go
+export GOPATH=/home/karen/go
+
+#mpd
+#[ ! -s ~/.config/mpd/pid ] && mpd
