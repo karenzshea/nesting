@@ -124,8 +124,6 @@ if [ -d "$HOME/.nvm" ]; then
     nvm use --lts=carbon> /dev/null
 fi
 
-source "$(npm root -g)/@mapbox/mbxcli/bin/mapbox.sh"
-
 shopt -s checkwinsize
 
 # let autocomplete work with sudo
