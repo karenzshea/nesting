@@ -10,6 +10,6 @@ alias reboot='sudo shutdown -r now'
 alias suspend='sudo pm-suspend'
 alias hibernate='sudo pm-hibernate'
 
+# remove trailing whitespace
 alias trail="sed -i 's/\s*$//'"
-alias cuke='/home/karen/Mapbox/osrm-backend/node_modules/.bin/cucumberjs'
-alias osmium='/home/karen/Mapbox/osmium-tool-1.6.1/build/osmium'
+alias osmium='/home/karen/Code/osmium-tool-1.6.1/build/osmium'
