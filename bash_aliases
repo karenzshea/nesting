@@ -10,6 +10,10 @@ alias reboot='sudo shutdown -r now'
 alias suspend='sudo pm-suspend'
 alias hibernate='sudo pm-hibernate'
 
-# remove trailing whitespace
 alias trail="sed -i 's/\s*$//'"
-alias osmium='/home/karen/Code/osmium-tool-1.6.1/build/osmium'
+alias vim="nvim"
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'

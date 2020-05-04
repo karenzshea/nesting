@@ -25,7 +25,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -85,12 +85,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -119,69 +114,43 @@ fi
 export EDITOR=vim
 export GREP_COLOR="1;33"
 
+# nvm/node
 if [ -d "$HOME/.nvm" ]; then
     source "$HOME/.nvm/nvm.sh"
-    nvm use --lts=carbon> /dev/null
+    nvm use --lts > /dev/null
 fi
 
-shopt -s checkwinsize
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # let autocomplete work with sudo
 complete -cf sudo
 
 # ---- Shell Prompt ---------------------------------------------------
 
-# Functions to tell me whether I am in a git or svn working copy, + which branch
+# git
 parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-}
-parse_hg_branch() {
-  hg summary 2> /dev/null | grep ^branch | sed -e 's/.*: \(.*\)/(hg::\1)/'
-}
-parse_svn_branch() {
-  parse_svn_url | sed -e 's#^'"$(parse_svn_repository_root)"'##g' | awk -F / '{print "(svn::"$1 "/" $2 ")"}'
-}
-parse_svn_url() {
-  svn info 2>/dev/null | grep -e '^URL*' | sed -e 's#^URL: *\(.*\)#\1#g '
-}
-parse_svn_repository_root() {
-  svn info 2>/dev/null | grep -e '^Repository Root:*' | sed -e 's#^Repository Root: *\(.*\)#\1\/#g '
 }
 
 # The prompt itself
 if [ $TERM = 'dumb' ] ; then
     # No color, no unicode (eg, Vim shell)
-    export PS1="\[\033[G\]\w \$(parse_git_branch)\$(parse_hg_branch)\$(parse_svn_branch) > "
+    export PS1="\[\033[G\]\w \$(parse_git_branch) > "
 elif [ $TERM = 'mrxvt' ] ; then
     # Mrxvt supports color, but not unicode.
-    export PS1="\[\033[G\]\[\033[01;34m\]\w \[\033[32m\]\$(parse_git_branch)\$(parse_hg_branch)\$(parse_svn_branch)\[\033[00m\] > "
+    export PS1="\[\033[G\]\[\033[01;34m\]\w \[\033[32m\]\$(parse_git_branch)\[\033[00m\] > "
 else
     # Default: Full-color, Unicode
-    export PS1="\[\033[01;34m\]\w \[\033[32m\]\$(parse_git_branch)\$(parse_hg_branch)\$(parse_svn_branch)\[\033[00m\] ➤ "
+    export PS1="\[\033[01;34m\]\w \[\033[32m\]\$(parse_git_branch)\[\033[00m\] ➤ "
 fi
 
 # set terminal tab name
-function t() {
+function tab() {
     PROMPT_COMMAND="echo -ne \"\033]0;${1}\007\""
 }
 
-# AWS cli autocomplete
-complete -C '/usr/bin/aws_completer' aws
+# rust
+source $HOME/.cargo/env
 
-# added by travis gem
-[ -f /home/karen/.travis/travis.sh ] && source /home/karen/.travis/travis.sh
-
-function s3du() {
-   bucket=`cut -d/ -f3 <<< $1`
-   prefix=`awk -F/ '{for (i=4; i<NF; i++) printf $i"/"; print $NF}' <<< $1`
-   aws s3api list-objects --bucket $bucket --prefix=$prefix --output json --query '[sum(Contents[].Size), length(Contents[])]' | jq '. |{ size:.[0],num_objects: .[1]}'
-}
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# go
-export GOPATH=/home/karen/go
-
-#mpd
-#[ ! -s ~/.config/mpd/pid ] && mpd
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
